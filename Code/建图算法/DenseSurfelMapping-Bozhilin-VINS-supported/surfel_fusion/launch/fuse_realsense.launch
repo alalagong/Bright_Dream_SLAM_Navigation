@@ -1,0 +1,30 @@
+<launch>
+  <node pkg="surfel_fusion" type="surfel_fusion" name="surfel_fusion" clear_params="true" output="screen">
+
+    <!-- camera parameter -->
+    <param name="cam_width" value="640" />
+    <param name="cam_height" value="480" />
+
+    <!--input image info-->
+    <param name="cam_fx" value="385.7544860839844" />
+    <param name="cam_cx" value="323.1204833984375" />
+    <param name="cam_fy" value="385.7544860839844" />
+    <param name="cam_cy" value="236.7432098388672" />
+
+    <!-- fusion parameter, all in meter -->
+    <param name="fuse_far_distence"  value="3.0" />
+    <param name="fuse_near_distence" value="0.5" />
+
+    <!-- for deform the map -->
+    <param name="drift_free_poses" value="30" />
+
+    <!-- for data save -->
+    <remap from="~image" to="/camera/infra1/image_rect_raw" />
+    <remap from="~depth" to="/camera/depth/image_rect_raw" />
+    <remap from="~save_map" to="/surfel_fusion/save_map" />
+   <remap from="~loop_path" to="/loop_fusion/pose_graph_path" />
+   <remap from="~extrinsic_pose" to="/vins_estimator/extrinsic" />
+
+  </node>
+
+</launch>

@@ -1,0 +1,30 @@
+<launch>
+
+<!-- <arg name="drone_number"    default="1"/> -->
+<arg name="map_size_x" default="20.0"/>
+<arg name="map_size_y" default="20.0"/>
+<arg name="map_size_z" default=" 3.0"/>
+
+
+  <node pkg ="trr_global_planner" name ="simple_map" type ="simple_map" output = "screen">    
+      <remap from="~odometry"       to="/vins_estimator/odometry"/>
+
+      <!-- <param name="init_state_x"   value="$(arg init_x)"/>
+      <param name="init_state_y"   value="$(arg init_y)"/> -->
+
+      <param name="map/x_size"     value="$(arg map_size_x)" />
+      <param name="map/y_size"     value="$(arg map_size_y)" />
+      <param name="map/z_size"     value="$(arg map_size_z)" />
+         
+      <param name="map/resolution" value="0.1"/>        
+
+      <param name="ObstacleShape/lower_rad" value="0.5"/>
+      <param name="ObstacleShape/upper_rad" value="1.5"/>
+      <param name="ObstacleShape/lower_hei" value="1.0"/>
+      <param name="ObstacleShape/upper_hei" value="3.0"/>
+       
+      
+      <param name="sensing/rate"   value="0.5"/>        
+  </node>
+
+</launch>

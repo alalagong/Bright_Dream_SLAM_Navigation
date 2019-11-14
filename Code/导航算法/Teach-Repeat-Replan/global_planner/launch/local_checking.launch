@@ -1,0 +1,31 @@
+<launch>
+
+<arg name="map_size_x" default="20.0"/>
+<arg name="map_size_y" default="20.0"/>
+<arg name="map_size_z" default="3.0"/>
+
+<arg name="init_x" default=" 0.0"/>
+<arg name="init_y" default=" 0.0"/>
+<arg name="init_z" default=" 2.0"/>
+
+<arg name="max_vel" default="2.0"/>
+<arg name="max_acc" default="2.0"/>
+
+<arg name="resolution" default="0.2"/>
+<arg name="poly_order" default="5"/>
+
+  <node pkg="local_sensing_node" type="pcl_render_node" name="pcl_render_node" output="screen">
+        <rosparam command="load" file="$(find local_sensing_node)/params/camera.yaml" />
+
+        <param name="sensing_horizon"  value="5.0" />
+        <param name="sensing_rate"     value="30.0"/>
+        <param name="estimation_rate"  value="30.0"/>
+        <param name="map/x_size"     value="$(arg map_size_x)"/>
+        <param name="map/y_size"     value="$(arg map_size_y)"/>
+        <param name="map/z_size"     value="$(arg map_size_z)"/>
+
+        <remap from="~local_map"  to="/surfel_fusion/neighbor_pointcloud"/>
+        <remap from="~odometry"   to="/vins_estimator/odometry"/>
+  </node>
+
+</launch>

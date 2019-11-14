@@ -1,0 +1,46 @@
+<launch>
+<arg name="drone_number"    default="1"/>
+<arg name="simulation"      default="true"/>
+<arg name="yaw"             default="false"/>
+
+<!-- Simulator-->
+<node pkg="so3_quadrotor_simulator"
+      type="quadrotor_simulator_so3"
+      name="quadrotor_simulator_so3_$(arg drone_number)"
+      output="screen">
+  <param name="rate/odom" value="100.0"/>
+
+  <param name="simulator/init_state_x" value="-8.5"/>
+  <param name="simulator/init_state_y" value="-8.5"/>
+  <param name="simulator/init_state_z" value=" 0.5"/>
+  <remap from="~odom" to="drone_$(arg drone_number)/visual_slam/odom"/>
+  <remap from="~cmd" to="drone_$(arg drone_number)/so3_command"/>
+  <remap from="~imu" to="drone_$(arg drone_number)/sim/imu"/>
+  <remap from="~force_disturbance" to="drone_$(arg drone_number)/force_disturbance"/>
+  <remap from="~moment_disturbance" to="drone_$(arg drone_number)/moment_disturbance"/>
+</node>
+
+<!-- Visualization -->
+<node pkg="odom_visualization"
+		name="odom_visualization_$(arg drone_number)"
+		type="odom_visualization"
+		output="log">
+	<remap from="~odom"            to="/vins_estimator/odometry"/>
+	<remap from="~odom_world"      to="/all_odom"/>
+	<param name="base_frame"       value="/map"/>
+	<param name="target_frame"     value="/map"/>
+	<param name="tf45"             value="true"/>
+	<param name="tfc"              value="false"/>
+	<param name="color/a"          value="1.0"/>
+	<param name="color/r"          value="1.0"/>
+	<param name="color/g"          value="0.0"/>
+	<param name="color/b"          value="0.0"/>
+	<param name="covariance_scale" value="100.0"/>
+	<param name="drone_scale"      value="0.8"/>
+	<param name="id"               value="$(arg drone_number)"/>
+</node>
+
+<node name="rviz" pkg="rviz" type="rviz" output="log"
+	args="-d $(find trr_global_planner)/config/rviz_config.rviz"> 
+</node>
+</launch>

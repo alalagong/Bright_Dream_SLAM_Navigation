@@ -1,0 +1,19 @@
+<launch>
+
+<!-- <arg name="drone_number"    default="1"/> -->
+<arg name="map_size_x" default="20.0"/>
+<arg name="map_size_y" default="20.0"/>
+<arg name="map_size_z" default=" 0.5"/>
+
+
+  <node pkg ="trr_global_planner" name ="actual_map" type ="actual_map" output = "screen">    
+      <remap from="~raw_map"       to="/surfel_fusion/pointcloud"/>
+      <remap from="~auto"    to="/wheel_driver/auto_mode"/> 
+      <param name="map/x_size"     value="$(arg map_size_x)" />
+      <param name="map/y_size"     value="$(arg map_size_y)" />
+      <param name="map/z_size"     value="$(arg map_size_z)" />
+
+      <param name="sensing/rate"   value="0.5"/>        
+  </node>
+
+</launch>

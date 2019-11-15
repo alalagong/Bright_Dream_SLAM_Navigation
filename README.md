@@ -1,16 +1,18 @@
 # Robot_SLAM_Navigation
 1031 demo version
 
-一、 概述
+## 一、 概述
 
 所有代码均需在ROS环境下运行。运行前需设置地面站和上位机的分布式主从通信（网线直连），注意设置和更改两台处理器的IP地址。
 
-二、 环境配置
+## 二、 环境配置
 
 **Ubuntu and ROS**
+
 Our software is developed in Ubuntu 16.04. ROS Kinetic. ROS can be installed here: [ROS Installation](http://wiki.ros.org/ROS/Installation)
 
 **Ceres Solver**
+
 Follow [Ceres Installation](http://ceres-solver.org/installation.html).
 
 **Mosek and OOQP**
@@ -74,7 +76,8 @@ Or, you can manually install them one by one:
 
 The simulator requires C++17, which needs **gcc 7** to compile. When you catkin_make, the simulator would automatically select gcc 7 as its compiler, but wouldn't change your default compiler (gcc 4.8/ gcc 5). 
 
-三、 源码模块
+
+## 三、 源码模块
 
 源码主要分为四个部分：
 
@@ -88,9 +91,10 @@ The simulator requires C++17, which needs **gcc 7** to compile. When you catkin_
 
 四个部分中，建图算法和定位算法的结果是导航算法所需的输入数据。小车发送的里程计数据是定位算法的输入数据。导航算法通过小车通信接口向小车下发轮子速度指令。
 
-四、 源码的部署
 
-1. 地面站：
+## 四、 源码的部署
+
+### 1. 地面站：
 
 执行实时建图算法和可视化。
 
@@ -100,7 +104,7 @@ The simulator requires C++17, which needs **gcc 7** to compile. When you catkin_
 
 启动脚本为：ground_station.sh
 
-2. 上位机：
+### 2. 上位机：
 
 执行定位算法、导航算法，以及和小车的数据及命令通信。
 
@@ -114,7 +118,7 @@ The simulator requires C++17, which needs **gcc 7** to compile. When you catkin_
 
 启动传感器（相机、IMU、轮子）：launch_sensors.sh
 
-五、 程序操作
+## 五、 程序操作
 
 实时建图默认定位导航程序启动点为导航起点，
 
@@ -124,7 +128,7 @@ The simulator requires C++17, which needs **gcc 7** to compile. When you catkin_
 
 上一步完成后，按下键盘‘n’键，小车开始自动运行。
 
-六、 其他提示
+## 六、 其他提示
 
 1. 如果脚本运行出错，可能是部分指令运行需要较长时间，尚未完成即开始执行下一指令。建议尝试将指令分开运行观察运行效果。
 

@@ -7,13 +7,72 @@
 
 二、 环境配置
 
-Ubuntu and ROS
+**Ubuntu and ROS**
+Our software is developed in Ubuntu 16.04. ROS Kinetic. ROS can be installed here: [ROS Installation](http://wiki.ros.org/ROS/Installation)
 
-Ceres Solver
+**Ceres Solver**
+Follow [Ceres Installation](http://ceres-solver.org/installation.html).
 
-Mosek and OOQP
+**Mosek and OOQP**
 
-具体安装细节可见各模块Cｏｄｅ文件夹中的说明。
+We use **Mosek** for conic programming. To use mosek, you should request a free **Personal Academic License** [here](https://www.mosek.com/products/academic-licenses/). Then create a folder named 'mosek' in your home directory and put your license in it. All header and library files are already included in this repo, so you don't need to download mosek again. 
+
+We use **OOQP** for quadratic programming. 
+
+1. Get a copy of **MA27** from the [HSL Archive](http://www.hsl.rl.ac.uk/download/MA27/1.0.0/a/). Just select the **Personal Licence (allows use without redistribution)**, then fill the information table. You can download it from an e-mail sent to you. Then, un-zip **MA27**, and follow the *README* in it, install it to your Ubuntu.
+
+**If you are new to Ubuntu, or too lazy to follow its *README*, see here, just type 3 commands in MA27's folder :**
+```
+./configure
+make 
+sudo make install
+```
+
+2. Manually un-zip packages *OOQP.zip* in the **installation** folder of this repo and install it follow the document *INSTALL* in **OOQP**, install it to your Ubuntu.
+
+**As above, you can just type 3 commands in OOQP's folder :**
+```
+./configure
+make 
+sudo make install
+```
+
+**NOTE**: Compile MA27, you will get a static library file named libma27.a in its /src folder. Then when you compile OOQP, the original OOQP would search the libma27.a file in its current top folder. However, in this repo, I modify OOQP's *configure* file to let it search libma27.a in your ubuntu system. So:
+
+**Case1** - If you download OOQP by yourself (from OOQP's website), you have to copy and paste libma27.a into OOQP's folder before you compile OOQP, otherwise you would find a compile error.
+
+**Case2** - If you use OOQP from this repo, just follow the above commands without any other considerations. 
+
+**1.3**   **some tools**
+
+To install the following dependencies, you can run the auto-install script by 
+```
+  ./install_tools.sh
+```
+
+Then run
+```
+  ./config_gcc.sh
+```
+to finish the configuration
+
+Or, you can manually install them one by one:
+```
+  sudo apt-get install ros-kinetic-joy
+  sudo apt-get install libnlopt-dev
+  sudo apt-get install libf2c2-dev
+  sudo apt-get install libarmadillo-dev 
+  sudo apt-get install glpk-utils libglpk-dev
+  sudo apt-get install libcdd-dev
+
+  sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+  sudo apt-get update
+  sudo apt-get install gcc-7 g++-7
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 60 --slave /usr/bin/g++ g++ /usr/bin/g++-5
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 50 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+```
+
+The simulator requires C++17, which needs **gcc 7** to compile. When you catkin_make, the simulator would automatically select gcc 7 as its compiler, but wouldn't change your default compiler (gcc 4.8/ gcc 5). 
 
 三、 源码模块
 
